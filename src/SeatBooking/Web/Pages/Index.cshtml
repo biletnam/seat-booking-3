@@ -5,6 +5,19 @@
 }
 
 @section scripts {
+
+    <script type="text/javascript" src="~/lib/signalr/signalr.js"></script>
+    <script type="text/javascript">
+        var transport = signalR.TransportType.WebSockets;
+        var connection = new signalR.HubConnection(`http://${document.location.host}/seat`, { transport: transport });
+
+        connection.on('animalAssigned', (animal) => {
+            alert('You are: ' + animal);
+        });
+
+        connection.start();
+    </script>
+
     <link rel="stylesheet" type="text/css" href="~/lib/jquery-seat-charts/jquery.seat-charts.css">
     <link rel="stylesheet" type="text/css" href="~/lib/jquery-seat-charts/style.css">
 
@@ -118,14 +131,6 @@
 
     </script>
 }
-
-@*<head>
-        <title>JSC Demo</title>
-
-        <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="jQuery-Seat-Charts/jquery.seat-charts.css">
-        <link rel="stylesheet" type="text/css" href="style.css">
-    </head>*@
 
 <div class="wrapper">
     <div class="container">
