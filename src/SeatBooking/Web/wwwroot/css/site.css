@@ -39,3 +39,11 @@ body {
 div.seatCharts-container {
     width: auto !important
 }
+
+.no-padding-left {
+    padding-left: 0;
+}
+
+.no-padding-right {
+    padding-right: 0;
+}

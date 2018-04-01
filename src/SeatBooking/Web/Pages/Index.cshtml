@@ -6,17 +6,9 @@
 
 @section scripts {
 
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular.js" integrity="sha256-ubLEQwr53FjvE/hMBvPTVinRBPUWl9FWKn2MW59CiM4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="~/lib/signalr/signalr.js"></script>
-    <script type="text/javascript">
-        var transport = signalR.TransportType.WebSockets;
-        var connection = new signalR.HubConnection(`http://${document.location.host}/seat`, { transport: transport });
-
-        connection.on('animalAssigned', (animal) => {
-            alert('You are: ' + animal);
-        });
-
-        connection.start();
-    </script>
+    <script type="text/javascript" src="~/js/app.js"></script>
 
     <link rel="stylesheet" type="text/css" href="~/lib/jquery-seat-charts/jquery.seat-charts.css">
     <link rel="stylesheet" type="text/css" href="~/lib/jquery-seat-charts/style.css">
@@ -132,11 +124,28 @@
     </script>
 }
 
-<div class="wrapper">
+<div ng-controller="SeatController" class="wrapper">
     <div class="container">
+        <h1>Welcome moviegoer!</h1>
+        <div class="row" style="border:1px solid {{stringToColour(assignedAnimal)}}">
+            <div class="col-sm-9 pull-right">
+                <p>To book tickets you need to fight for them. Your spirit animal has been randomly selected as <strong>{{assignedAnimal}}</strong> and below you can see your competitors.</p>
+            </div>
+            <div class="col-sm-3 no-padding-left">
+                <div style="background-color: {{ stringToColour(assignedAnimal) }}"><img class="img-responsive" ng-src="/images/animal-icons/{{ assignedAnimal }}.png" title="{{assignedAnimal}}" /></div>
+            </div>
+        </div>
+
+        <h2>Competitors</h2>
+        <div class="row" style="border:1px solid {{stringToColour(animal)}}" ng-repeat="animal in animals" ng-if="animal != assignedAnimal">
+            <div class="col-sm-2 no-padding-left"  style="background-color: {{ stringToColour(animal) }}">
+                <img class="img-responsive" ng-src="/images/animal-icons/{{animal}}.png" />
+            </div>
+            <div class="col-sm-10">{{ animal }}</div>
+        </div>
+
         <div id="seat-map">
             <div class="front-indicator">Front</div>
-
         </div>
         <div class="booking-details">
             <h2>Booking Details</h2>
